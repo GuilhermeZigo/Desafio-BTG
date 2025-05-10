@@ -6,6 +6,7 @@ namespace PedidoProcessor.Consumers;
 
 public class PedidoConsumer : IConsumer<Pedido>
 {
+    private const int TempoSimuladoEmMs = 10000;
     private readonly PedidoService _pedidoService;
 
     public PedidoConsumer(PedidoService pedidoService)
@@ -14,9 +15,14 @@ public class PedidoConsumer : IConsumer<Pedido>
     }
 
     public async Task Consume(ConsumeContext<Pedido> context)
-    {
-        await Task.Delay(10000); // simulação do delay
-        _pedidoService.AtualizarStatus(context.Message.Id, "processado");
-        Console.WriteLine($"Pedido {context.Message.Id} processado.");
-    }
+{
+    Console.WriteLine($"[Fila] Pedido recebido: {context.Message.Id}");
+    
+    await Task.Delay(TempoSimuladoEmMs); // Simula delay
+
+    _pedidoService.AtualizarStatus(context.Message.Id, "processado");
+
+    Console.WriteLine($"[Processador] Pedido {context.Message.Id} marcado como processado.");
+}
+
 }

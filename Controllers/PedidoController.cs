@@ -18,13 +18,20 @@ public class PedidoController : ControllerBase
         _publishEndpoint = publishEndpoint;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CriarPedido([FromBody] Pedido pedido)
-    {
-        var novoPedido = _pedidoService.CriarPedido(pedido);
-        await _publishEndpoint.Publish(novoPedido);
-        return CreatedAtAction(nameof(ObterPedido), new { id = novoPedido.Id }, novoPedido);
-    }
+  [HttpPost]
+public async Task<IActionResult> CriarPedido([FromBody] Pedido pedido)
+{
+    if (string.IsNullOrWhiteSpace(pedido.ClienteId))
+        return BadRequest("ClienteId é obrigatório.");
+
+    if (pedido.Itens == null || !pedido.Itens.Any())
+        return BadRequest("A lista de itens não pode estar vazia.");
+
+    var novoPedido = _pedidoService.CriarPedido(pedido);
+    await _publishEndpoint.Publish(novoPedido);
+    return CreatedAtAction(nameof(ObterPedido), new { id = novoPedido.Id }, novoPedido);
+}
+
 
     [HttpGet("{id}")]
     public IActionResult ObterPedido(Guid id)

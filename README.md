@@ -21,7 +21,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 - RabbitMQ
 - MassTransit
 - Docker e Docker Compose
-- Swagger (para documentação e testes)
+- Swagger
 
 ---
 
@@ -50,7 +50,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
    dotnet run
    ```
 
-4. Acesse a API:
+4. Acesse a documentação da API:
    ```
    http://localhost:5126/swagger
    ```
@@ -74,6 +74,8 @@ Corpo da requisição:
 }
 ```
 
+- O endpoint realiza validações para garantir que o `clienteId` não esteja vazio e que exista ao menos um item.
+
 Resposta:
 - Status HTTP: `201 Created`
 - Corpo: ID do pedido e status "pendente"
@@ -83,7 +85,8 @@ Resposta:
 Requisição: `GET /pedidos/{id}`
 
 - Status possível: `"pendente"` ou `"processado"`
-- Após cerca de 10 segundos da criação, o pedido muda para `"processado"`
+- Após 10 segundos da criação, o pedido muda para `"processado"`
+- Caso o ID não exista, retorna `404 Not Found`
 
 ---
 
@@ -91,7 +94,9 @@ Requisição: `GET /pedidos/{id}`
 
 - Os dados são mantidos em memória durante a execução da aplicação. Ao encerrar, tudo é perdido.
 - O uso do RabbitMQ é essencial para o funcionamento. Certifique-se de que o container esteja ativo.
-- Não é necessário configurar manualmente o RabbitMQ. O arquivo `docker-compose.yml` já cuida disso.
+- O tempo de processamento é configurável na classe `PedidoConsumer`.
+- A aplicação possui logs simples no console indicando o recebimento e o processamento dos pedidos.
 
 ---
+
 Desenvolvido para o processo seletivo de Engenheiro de Software (.NET)| Electronic Trading do BTG Pactual.
