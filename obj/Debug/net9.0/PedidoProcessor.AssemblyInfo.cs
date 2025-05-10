@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PedidoProcessor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c161b8ff1879088bd9bdc341c36385b49a650f4")]
 [assembly: System.Reflection.AssemblyProductAttribute("PedidoProcessor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PedidoProcessor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

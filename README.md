@@ -1,70 +1,70 @@
-# PedidoProcessor
+# Desafio Técnico BTG - Processamento Assíncrono de Pedidos
 
-Sistema simples de processamento assíncrono de pedidos, usando .NET + RabbitMQ via Docker.
-
----
-
-## O que esse projeto faz
-
-- Exponibiliza uma API com dois endpoints:
-  - `POST /pedidos` → cria um pedido
-  - `GET /pedidos/{id}` → consulta o status
-- Os pedidos são colocados em uma fila RabbitMQ
-- Um consumidor pega os pedidos da fila, espera 2 segundos e marca como "processado"
-- O status dos pedidos é mantido em memória (sem banco de dados)
+Este projeto foi desenvolvido como parte do desafio técnico proposto pelo BTG Pactual. O objetivo é simular o processamento assíncrono de pedidos utilizando uma API HTTP, filas de mensagens e armazenamento em memória.
 
 ---
 
-## Tecnologias usadas
+## Sobre o projeto
+
+A aplicação expõe dois endpoints principais:
+
+- `POST /pedidos`: cria um novo pedido e o envia para uma fila para processamento assíncrono.
+- `GET /pedidos/{id}`: retorna o status atual de um pedido específico.
+
+Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um consumidor então processa esse pedido com um pequeno delay (simulando trabalho assíncrono), e marca o pedido como "processado". O status é mantido em memória durante a execução do sistema.
+
+---
+
+## Tecnologias utilizadas
 
 - .NET 8
 - RabbitMQ
 - MassTransit
-- Swagger (para testar a API)
-- Docker Compose (para subir o RabbitMQ facilmente)
+- Docker e Docker Compose
+- Swagger (para documentação e testes)
 
 ---
 
-## 💻 Como rodar localmente
+## Requisitos para rodar
 
-### Pré-requisitos:
-
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
+- [.NET SDK 8](https://dotnet.microsoft.com/en-us/download)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-### Passos:
+---
 
-1. Clone o repositório:
-   ```bash
-   git clone <URL_DO_SEU_REPO>
+## Como executar o projeto
+
+1. Clone este repositório:
+   ```
+   git clone <URL_DO_REPOSITORIO>
    cd PedidoProcessor
-Suba o RabbitMQ com Docker:
+   ```
 
-bash
-Copiar
-Editar
-docker compose up -d
-Rode a aplicação:
+2. Suba o RabbitMQ com Docker:
+   ```
+   docker compose up -d
+   ```
 
-bash
-Copiar
-Editar
-dotnet run
-Acesse a documentação da API no navegador:
+3. Execute a aplicação:
+   ```
+   dotnet run
+   ```
 
-bash
-Copiar
-Editar
-http://localhost:5126/swagger
-📦 Testando a API
-Criar um pedido
-Endpoint: POST /pedidos
+4. Acesse a documentação da API:
+   ```
+   http://localhost:5126/swagger
+   ```
 
-Corpo JSON de exemplo:
+---
 
-json
-Copiar
-Editar
+## Exemplo de uso
+
+### Criar um pedido
+
+Requisição: `POST /pedidos`  
+Corpo da requisição:
+
+```json
 {
   "clienteId": "123",
   "itens": [
@@ -72,19 +72,30 @@ Editar
     { "nome": "Mouse", "quantidade": 2 }
   ]
 }
-Consultar status
-Endpoint: GET /pedidos/{id}
+```
 
-O status será "pendente" no início e mudará para "processado" após ~2 segundos
+Resposta:
+- Status HTTP: `201 Created`
+- Corpo: ID do pedido e status "pendente"
 
-Observações:
-Os pedidos são armazenados em memória. Ao reiniciar a aplicação, tudo é perdido (intencional).
+### Consultar o status
 
-Não há banco de dados, autenticação nem interface gráfica — foco na lógica assíncrona.
+Requisição: `GET /pedidos/{id}`
 
-A fila precisa estar rodando. Se quiser resetar o RabbitMQ:
+- Status possível: `"pendente"` ou `"processado"`
+- Após cerca de 2 segundos da criação, o pedido muda para `"processado"`
 
-bash
-Copiar
-Editar
-docker compose restart
+---
+
+## Observações
+
+- Os dados são mantidos em memória durante a execução da aplicação. Ao encerrar, tudo é perdido.
+- O uso do RabbitMQ é essencial para o funcionamento. Certifique-se de que o container esteja ativo.
+- Não é necessário configurar manualmente o RabbitMQ. O arquivo `docker-compose.yml` já cuida disso.
+
+---
+
+## Autor
+
+Guilherme  
+Desenvolvido para o processo seletivo do BTG Pactual.
