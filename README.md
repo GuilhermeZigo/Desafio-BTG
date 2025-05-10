@@ -50,7 +50,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
    dotnet run
    ```
 
-4. Acesse a documentação da API:
+4. Acesse a API:
    ```
    http://localhost:5126/swagger
    ```
@@ -83,7 +83,7 @@ Resposta:
 Requisição: `GET /pedidos/{id}`
 
 - Status possível: `"pendente"` ou `"processado"`
-- Após cerca de 2 segundos da criação, o pedido muda para `"processado"`
+- Após cerca de 10 segundos da criação, o pedido muda para `"processado"`
 
 ---
 
@@ -94,8 +94,4 @@ Requisição: `GET /pedidos/{id}`
 - Não é necessário configurar manualmente o RabbitMQ. O arquivo `docker-compose.yml` já cuida disso.
 
 ---
-
-## Autor
-
-Guilherme  
-Desenvolvido para o processo seletivo do BTG Pactual.
+Desenvolvido para o processo seletivo de Engenheiro de Software (.NET)| Electronic Trading do BTG Pactual.
