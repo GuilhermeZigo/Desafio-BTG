@@ -74,7 +74,8 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 
 Requisição: `POST /pedidos`  
 
-![Swagger](docs/swagger-try-it-out.png)
+![Swagger-try-it-out](docs/swagger-try-it-out.png)
+
 Corpo da requisição:
 
 ```json
