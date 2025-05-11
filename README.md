@@ -15,6 +15,14 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 
 ---
 
+## Arquitetura
+
+- API construída em .NET 8 (Web API)
+- Processamento assíncrono via RabbitMQ e MassTransit
+- Armazenamento dos pedidos em memória com `ConcurrentDictionary`
+- Estrutura separada em camadas: Controllers, Services, Consumers, Models
+- Testes unitários com xUnit
+
 ## Tecnologias utilizadas
 
 - .NET 8
@@ -29,10 +37,13 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 
 - [.NET SDK 8](https://dotnet.microsoft.com/en-us/download)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
-
+- Visual Studio Code (opcional)
+  - Extensões recomendadas:
+    - C#
+    - .NET Install Tool
 ---
 
-## Como executar o projeto
+## Como executar o projeto (Via Terminal)
 
 1. Clone este repositório:
    ```
@@ -59,9 +70,11 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 
 ## Exemplo de uso
 
-### Criar um pedido
+### Criar um pedido 
 
 Requisição: `POST /pedidos`  
+
+![Swagger](docs/swagger-try-it-out.png)
 Corpo da requisição:
 
 ```json
@@ -80,13 +93,36 @@ Resposta:
 - Status HTTP: `201 Created`
 - Corpo: ID do pedido e status "pendente"
 
+![Resposta](docs/response-id.png)
+
 ### Consultar o status
 
 Requisição: `GET /pedidos/{id}`
 
+![Requisição](docs/request-id.png)
+
 - Status possível: `"pendente"` ou `"processado"`
 - Após 10 segundos da criação, o pedido muda para `"processado"`
 - Caso o ID não exista, retorna `404 Not Found`
+
+![Resposta da Requisição](docs/get-response.png)
+
+---
+
+## Testes unitários
+
+O projeto possui um projeto de testes separado, localizado em `PedidoProcessor.Tests/`.
+
+### Executar os testes:
+
+```bash
+cd PedidoProcessor.Tests
+dotnet test
+```
+
+Os testes cobrem a lógica da camada de serviço (`PedidoService`) e verificam:
+- Criação de pedidos com status `"pendente"`
+- Atualização de status para `"processado"`
 
 ---
 
