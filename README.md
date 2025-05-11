@@ -25,7 +25,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 
 ## Tecnologias utilizadas
 
-- .NET 8
+- .NET 9
 - RabbitMQ
 - MassTransit
 - Docker e Docker Compose
@@ -35,7 +35,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 
 ## Requisitos para rodar
 
-- [.NET SDK 8](https://dotnet.microsoft.com/en-us/download)
+- [.NET SDK 9](https://dotnet.microsoft.com/en-us/download)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 - Visual Studio Code (opcional)
   - Extensões recomendadas:
@@ -94,7 +94,7 @@ Resposta:
 - Status HTTP: `201 Created`
 - Corpo: ID do pedido e status "pendente"
 
-![Resposta](docs/response-id.png)
+- ![Resposta](docs/response-id.png)
 
 ### Consultar o status
 
@@ -106,7 +106,7 @@ Requisição: `GET /pedidos/{id}`
 - Após 10 segundos da criação, o pedido muda para `"processado"`
 - Caso o ID não exista, retorna `404 Not Found`
 
-![Resposta da Requisição](docs/get-response.png)
+- ![Resposta da Requisição](docs/get-response.png)
 
 ---
 
