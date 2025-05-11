@@ -17,7 +17,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 
 ## Arquitetura
 
-- API construída em .NET 8 (Web API)
+- API construída em .NET 9 (Web API)
 - Processamento assíncrono via RabbitMQ e MassTransit
 - Armazenamento dos pedidos em memória com `ConcurrentDictionary`
 - Estrutura separada em camadas: Controllers, Services, Consumers, Models
@@ -48,6 +48,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 1. Clone este repositório:
    ```
    git clone <URL_DO_REPOSITORIO>
+   cd Desafio-BTG
    cd PedidoProcessor
    ```
 
