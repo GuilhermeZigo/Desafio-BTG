@@ -14,15 +14,21 @@ public class PedidoConsumer : IConsumer<Pedido>
         _pedidoService = pedidoService;
     }
 
-    public async Task Consume(ConsumeContext<Pedido> context)
+public async Task Consume(ConsumeContext<Pedido> context)
 {
-    Console.WriteLine($"[Fila] Pedido recebido: {context.Message.Id}");
-    
-    await Task.Delay(TempoSimuladoEmMs); // Simula delay
+    try
+    {
+        Console.WriteLine($"[Fila] Pedido recebido: {context.Message.Id}");
 
-    _pedidoService.AtualizarStatus(context.Message.Id, "processado");
+        await Task.Delay(TempoSimuladoEmMs); // Simula delay
 
-    Console.WriteLine($"[Processador] Pedido {context.Message.Id} marcado como processado.");
+        _pedidoService.AtualizarStatus(context.Message.Id, "processado");
+        Console.WriteLine($"[Processador] Pedido {context.Message.Id} marcado como processado.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[Erro] Falha ao processar pedido {context.Message.Id}: {ex.Message}");
+        
+    }
 }
-
 }
