@@ -20,6 +20,7 @@ Ao criar um pedido, ele é marcado como "pendente" e enviado para a fila. Um con
 - API construída em .NET 9 (Web API)
 - Processamento assíncrono via RabbitMQ e MassTransit
 - Armazenamento dos pedidos em memória com `ConcurrentDictionary`
+- Middleware global para tratamento de exceções
 - Estrutura separada em camadas: Controllers, Services, Consumers, Models
 - Testes unitários com xUnit
 
@@ -134,6 +135,7 @@ Os testes cobrem a lógica da camada de serviço (`PedidoService`) e verificam:
 - O uso do RabbitMQ é essencial para o funcionamento. Certifique-se de que o container esteja ativo.
 - O tempo de processamento é configurável na classe `PedidoConsumer`.
 - A aplicação possui logs simples no console indicando o recebimento e o processamento dos pedidos.
+- A aplicação utiliza um middleware de exceção para capturar e responder erros internos com HTTP 500.
 
 ---
 
