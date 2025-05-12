@@ -1,5 +1,6 @@
 using PedidoProcessor.MessageQueue;
 using PedidoProcessor.Services;
+using PedidoProcessor.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthorization();
